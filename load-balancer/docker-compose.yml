@@ -1,0 +1,19 @@
+# recargar manualmente el HAproxy
+# docker exec <haproxy_id> /reload.sh
+lb:
+  image: 'dockercloud/haproxy:1.5.3'
+  external_links:
+    - hub_registry
+    - hub_front
+  environment:
+    STATS_AUTH: 'admin:admin'
+    STATS_PORT: '1936'
+    MONITOR_PORT: '80'
+    MONITOR_URI: '/status'
+    #CERT_FOLDER: '/certs/'
+  ports:
+    - '1936:1936'
+    - '443:443'
+    - '80:80'
+  # volumes:
+  #   - ./cacerts:/certs
